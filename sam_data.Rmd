@@ -2,13 +2,13 @@
 title: "SAM Data Exploration"
 author: "Tolga Atabas"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ## Goals of the Project
 
-Alluvial plots are by far the most interesting plots I have seen. They are relatively non-traditional, in that it rarely resembles the usual cartesian plots that we see everyday. Personally, I think it is a great escape from the table and charts that bombard our screen everyday, especially in times of the pandemic.
+Alluvial plots are by far the most interesting plots I have seen. They are relatively non-traditional, in that it rarely resembles the usual cartesian plots that we see everyday. Personally, I think it is a great escape from the table and charts that bombard our screens everyday, especially in times of the pandemic.
 
 In this project, I am using data collected by the Swarthmore Student Academic Mentor (SAM) program. The goal of the program is to look at the relationship between Swarthmore SAMs and their interactions with students. Furthermore, one possible question that the alluvial plot can help answer is whether the academic division of a specific SAM impacts the type of students that reach out to that SAM. For example, does a SAM who studies in the Social Sciences (SS) have more students from Social Sciences reaching out to them in comparison to Natural Sciences & Engineering (NSE) or Humanities (HU)? We will soon find out!
 
@@ -62,9 +62,9 @@ The SAM Interactions and SAMs datasets will be joined together simply by using `
 
 ### Data Preparation
 
-We can think of an alluvial plot as having two axes, a source and a destination. The source in this case are the students, and their destinations that SAMs. We want to group students by division, and see how these students go to the SAMs for advice. Following this model, it is necessary to have the data structured in a way that we have the frequency or count of students in divison X that go to SAMs in division Y. This requires some restructuring of the data. 
+We can think of an alluvial plot as having two axes, a source and a destination. The source in this case are the students, and their destinations are the SAMs. We want to group students by division, and see how these students go to the SAMs for advice. Following this model, it is necessary to have the data structured in a way such that we have the frequency or count of students in division X that go to SAMs in division Y. This requires some restructuring of the data. 
 
-Since the divisions of students are multi-selection inputs, the "Student's Academic Interest" field can be filled in with more than one division. The same applies for SAMs. It is not uncommon for students at Swarthmore to have one major in the NSE division and another major/minor in the SS division, or some other combination of divisions. Since this is the case, I thought it was best to create a y/n field for each student division and SAM division. So I added a total of 7 more fields to the data set: `student_nse` `student_ss` `student_hu` `student_un` `sam_nse` `sam_ss` and `sam_hu`. There are four fields for students, "nse" for Natural Sciences & Engineering, "ss" for Social Sciences, "hu" for Humanities, and "un" for Undecided, each indicated as y or n. Similarly, "sam_div" is y or n if a SAM is studying in a particular division or not.
+Since the divisions of students are multi-selection inputs, the "Student's Academic Interest" field can be filled in with more than one division. The same applies for SAMs. It is not uncommon for students at Swarthmore to have one major in the NSE division and another major/minor in the SS division, or some other combination of divisions. Since this is the case, I thought it was best to create a y/n field for each student division and SAM division. So I added a total of 7 more fields to the data set: `student_nse`, `student_ss`, `student_hu`, `student_un`, `sam_nse`, `sam_ss`, and `sam_hu`. There are four fields for students, "nse" for Natural Sciences & Engineering, "ss" for Social Sciences, "hu" for Humanities, and "un" for Undecided, each indicated as y or n. Similarly, "sam_div" is y or n if a SAM is studying in a particular division or not.
 
 ```{r get-data, echo = TRUE}
 #joining the data 
@@ -257,4 +257,4 @@ As a start, we are assuming that students in the NSE division choose SAMs in the
 $$\chi^2 = \frac{(49 - 25)^2}{25} + \frac{(19 - 25)^2}{25} + \frac{(7 - 25)^2}{25} = 37.44$$
 Now, to get the p-value, we calculate $P(\chi^2_{n-1} \ge 37.44) = 1 - P(\chi^2_{n-1} \le 37.44) = 1 - pchisq(37.44, df = 2) \approx 7.4 \times 10^{-9}$. Since the p-value is quite significant, we can reject the null hypothesis that the NSE students seek advice from SAMs at an equal frequency across the divisions.
 
-This same patter is repeated with SS students having a chi-square value of `r round(chi_ss,2)` and p-value of `r p_ss`. HU students have a chi-square value of `r round(chi_hu,2)` and p-value of `r p_hu`. Undecided students have a chi-square value of `r round(chi_un,2)` and a p-value of `r p_un`. It seems that humanities students are spread out closer to the null hypothesis assumption than the other divisions, meaning that humanities students seem to approach SAMs in different divisions with equally likely frequencies. Depending on the $\alpha$ cutoff that you prefer, the same may be said for undecided students. However, if we were going by the general $\alpha < 0.05$ rule, we can also reject the null hypothesis for undecided students and say that they do not seek advice in equal frequencies from SAMs in different divisions.
+This same pattern is repeated with SS students having a chi-square value of `r round(chi_ss,2)` and p-value of `r p_ss`. HU students have a chi-square value of `r round(chi_hu,2)` and p-value of `r p_hu`. Undecided students have a chi-square value of `r round(chi_un,2)` and a p-value of `r p_un`. It seems that humanities students are spread out closer to the null hypothesis assumption than the other divisions, meaning that humanities students seem to approach SAMs in different divisions with equally likely frequencies. Depending on the $\alpha$ cutoff that you prefer, the same may be said for undecided students. However, if we were going by the general $\alpha < 0.05$ rule, we can also reject the null hypothesis for undecided students and say that they do not seek advice in equal frequencies from SAMs in different divisions.
